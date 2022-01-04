@@ -1,0 +1,62 @@
+{{template "base.html"}}
+
+{{define "head"}}
+    {{template "latex"}}
+{{end}}
+
+{{define "header"}}
+    문제 출제하기
+{{end}}
+{{define "header-description"}}
+    232명의 사용자가 작성한 1,329개의 문제를 풀어보세요!　■
+{{end}}
+
+{{define "article"}}
+    <article>
+        <div class="inset">
+            <div class="board">
+                <form action="">
+                    <h2>문제 출제하기</h2>
+                    <p>
+                        <label for="subject">
+                            <select name="subject" id="subject">
+                                <option value="math">수학</option>
+                                <option value="physics">물리학</option>
+                                <option value="philosophy">철학</option>
+                            </select>
+                        </label>
+                    </p>
+                    <p>
+                        <label for="content"><textarea name="content" id="content" onchange="updatePreview()" placeholder="LaTeX 문법을 사용할 수 있습니다."></textarea></label>
+                    </p>
+                </form>
+                <div class="preview">
+                    <h2>본문 미리보기</h2>
+                    <div id="preview">
+                        <p>Hello, world!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+    <script>
+        const content = document.querySelector("#content");
+        const preview = document.querySelector("#preview");
+
+        function updatePreview() {
+            while (preview.firstChild) {
+                preview.removeChild(preview.firstChild);
+            }
+
+            content.value.split('\n').forEach(line => {
+                if (line) {
+                    let p = document.createElement('p');
+                    p.innerText = line;
+                    preview.appendChild(p);
+                }
+            });
+
+            MathJax.Hub.Queue(["Typeset", MathJax.Hub, "#preview"]);
+        }
+    </script>
+{{end}}

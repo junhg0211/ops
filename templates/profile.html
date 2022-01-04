@@ -1,0 +1,27 @@
+{{template "base.html"}}
+
+{{define "header"}}
+    {{ .username }}
+{{end}}
+{{define "header-description"}}
+    {{ .email }}
+{{end}}
+
+{{define "article"}}
+    <article>
+        <div class="inset">
+            <h2>푼 문제</h2>
+            <div class="board">
+                <p>AL2 AL3 AL3 AL7 AL8 LA25 LA63 LA71</p>
+            </div>
+            <h2>시도한 문제</h2>
+            <div class="board">
+                <p>LA31</p>
+            </div>
+            <h2>참여한 토론</h2>
+            <div class="board">
+                <p>PH1 PH3 PH7 PH12 PH31 PH42</p>
+            </div>
+        </div>
+    </article>
+{{end}}

@@ -1,0 +1,256 @@
+body {
+    margin: 0;
+    font-family: "Pretendard", "Noto Sans CJK KR", sans-serif;
+}
+
+.inset {
+    width: 1024px;
+    margin: auto;
+}
+
+nav h2 {
+    display: inline;
+}
+
+nav a {
+    color: black;
+    text-decoration: none;
+}
+
+.navigation-list {
+    display: inline-block;
+    list-style: none;
+}
+
+.navigation-list li {
+    display: inline;
+    margin-right: 4rem;
+}
+
+.navigation-profile {
+    margin-top: 0.3rem;
+    float: right;
+}
+
+.navigation-profile img {
+    height: 2.5rem;
+    border-radius: 2rem;
+}
+
+.top-nav {
+    box-shadow: 0 5px 10px #0002;
+    padding: 0.5rem 0;
+}
+
+header {
+    padding: 100px 0;
+}
+
+article {
+    background-color: #fafafa;
+    padding-bottom: 2.5rem;
+}
+
+article .inset {
+    padding-top: 20px;
+}
+
+article .main-board {
+    display: flex;
+    flex-direction: row;
+}
+
+article nav {
+    width: 200px;
+}
+
+.category {
+    margin-top: 2rem;
+}
+
+.category-selected {
+    color: #ef2b97;
+}
+
+.category li {
+    line-height: 2rem;
+}
+
+.board {
+    flex-grow: 1;
+    background-color: white;
+    border-radius: 1rem;
+    padding: 1px 1.5rem;
+}
+
+.board p {
+    line-height: 1.5rem;
+}
+
+.problem-board {
+    margin-bottom: 3rem;
+}
+
+.section-title {
+    display: flex;
+}
+
+.section-name {
+    flex-grow: 1;
+}
+
+.section-more {
+    flex-grow: 1;
+    margin-top: 1.5rem;
+    text-align: right;
+    color: #ef2b97;
+}
+
+.post {
+    line-height: 1.4rem;
+    font-size: 0.9rem
+}
+
+.post .subject {
+    background-color: #ef2b97;
+    padding: 0 4px;
+    border-radius: 5px;
+    margin-right: 1rem;
+    color: white;
+    font-weight: bold;
+}
+
+.problem-code {
+    font-weight: bolder;
+    margin-right: 1rem;
+}
+
+.problem-content {
+    color: lightgray;
+}
+
+.rate {
+    float: right;
+}
+
+footer .inset {
+    display: flex;
+}
+
+.footer-profile {
+    flex-grow: 1;
+    text-align: right;
+}
+
+.footer-profile-image img {
+    height: 4rem;
+    border-radius: 2rem;
+    float: right;
+    margin-left: 2rem;
+}
+
+.footer-profile h3 {
+    margin-top: 2rem;
+    margin-bottom: 0;
+}
+
+.footer-profile p {
+    margin-top: 0;
+}
+
+footer {
+    padding: 2rem 0;
+}
+
+
+.mathblock {
+    text-align: center;
+}
+
+label, input {
+    font-family: 'Pretendard', 'Noto Sans CJK KR', sans-serif;
+}
+
+input[type="text"].long-text {
+    width: 100%;
+    border: none;
+    border-bottom: #afafaf 1px solid;
+    padding: 1rem;
+}
+
+input[type="text"]:focus {
+    animation: text-focus 0.2s ease-in-out;
+    outline: none;
+    border-bottom-color: #ef2b97;
+}
+
+input[type="submit"], button {
+    background-color: white;
+    color: #ef2b97;
+    padding: 10px 15px;
+    border: #ef2b97 1px solid;
+    border-radius: 5px;
+}
+
+@keyframes text-focus {
+    0% {
+        border-bottom-color: #afafaf;
+    }
+    100% {
+        border-bottom-color: #ef2b97;
+    }
+}
+
+select {
+    width: 100%;
+    border: none;
+    padding: 5px;
+    outline: none;
+}
+
+select option {
+    box-shadow: none;
+}
+
+textarea {
+    width: 100% !important;
+    height: 500px;
+    outline: none;
+    border: #afafaf 1px solid;
+    padding: 2rem;
+    box-sizing: border-box;
+}
+
+textarea:focus {
+    border: #ef2b97 1px solid;
+}
+
+.username {
+    font-weight: bold;
+}
+
+.comment-indicator, .comment-date {
+    font-size: 0.8rem;
+}
+
+.comment-indicator {
+    color: white;
+    padding: 0 2px;
+    border-radius: 3px;
+}
+
+.comment-correct {
+    background-color: green;
+}
+
+.comment-not-yet {
+    background-color: gray;
+}
+
+.comment-incorrect {
+    background-color: crimson;
+}
+
+.comment-date {
+    color: lightgray;
+}

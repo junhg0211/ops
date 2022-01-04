@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>OPS</title>
+    <link rel="stylesheet" href="/assets/index.css">
+    <meta name="google-signin-client_id"
+          content="589189790588-0lql284q6feemdaep92ta6g6gidpd52v.apps.googleusercontent.com">
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    {{template "head"}}
+</head>
+<body>
+
+<nav class="top-nav">
+    <div class="inset">
+        <h2><a href="/">OPS</a></h2>
+        <ul class="navigation-list">
+            <li>정답이 있는 문제</li>
+            <li>정답이 없는 문제</li>
+            <li>랜덤 문제</li>
+            <li>자주 받는 질문</li>
+        </ul>
+        <div class="navigation-profile">
+            <div class="g-signin2" data-onsuccess="onSignIn"></div>
+            <a class="profile-href"><img src="" alt="프로필 사진" id="nav-profile" style="display: none;"></a>
+        </div>
+    </div>
+</nav>
+<header>
+    <div class="inset">
+        <h1>{{template "header"}}</h1>
+        <p>{{template "header-description"}}</p>
+    </div>
+</header>
+
+{{template "article"}}
+
+<footer>
+    <div class="inset">
+        <nav>
+            <h3>| 둘러보기</h3>
+            <ul class="navigation-list">
+                <li>답이 있는 문제</li>
+                <li>답이 없는 문제</li>
+                <li>랜덤 문제</li>
+                <li>자주 받는 질문</li>
+            </ul>
+        </nav>
+        <div class="footer-profile">
+            <p>현재 로그인 중</p>
+            <div class="footer-profile-image">
+                <a class="profile-href"><img src="" alt="프로필 사진" id="footer-profile" style="display: none;"></a>
+            </div>
+            <div>
+                <h3>스치</h3>
+                <p>junhg0211@gmail.com</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!--suppress JSUnresolvedFunction, JSUnusedGlobalSymbols -->
+<script>
+    const profileElement = ["#nav-profile", "#footer-profile"]
+
+    function onSignIn(googleUser) {
+        let basicProfile = googleUser.getBasicProfile();
+
+        let gSignIn = document.querySelector(".g-signin2");
+        gSignIn.style.display = "none";
+
+        profileElement.forEach(elementPath => {
+            let profile = document.querySelector(elementPath);
+            profile.src = basicProfile.getImageUrl();
+            profile.style.display = "inline-block";
+        });
+
+        let profileHref = document.getElementsByClassName("profile-href");
+        for (let i = 0; i < profileHref.length; i++) {
+            profileHref[i].href = `/profile/${basicProfile.getEmail()}`;
+        }
+    }
+</script>
+
+</body>
+</html>
+
+{{define "head"}}
+{{end}}
+
+{{define "latex"}}
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
+    MathJax.Hub.Config({
+        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
+        jax: ["input/TeX", "output/HTML-CSS"],
+        tex2jax: {
+            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
+        },
+        "HTML-CSS": { availableFonts: ["TeX"] }
+    });
+</script>
+{{end}}
