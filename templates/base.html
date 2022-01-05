@@ -7,7 +7,7 @@
     <meta name="google-signin-client_id"
           content="589189790588-0lql284q6feemdaep92ta6g6gidpd52v.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    {{template "head"}}
+    {% block head %}{% endblock %}
 </head>
 <body>
 
@@ -28,12 +28,12 @@
 </nav>
 <header>
     <div class="inset">
-        <h1>{{template "header"}}</h1>
-        <p>{{template "header-description"}}</p>
+        <h1>{% block header %}{% endblock %}</h1>
+        <p>{% block header_description %}{% endblock %}</p>
     </div>
 </header>
 
-{{template "article"}}
+{% block article %}{% endblock %}
 
 <footer>
     <div class="inset">
@@ -84,20 +84,3 @@
 
 </body>
 </html>
-
-{{define "head"}}
-{{end}}
-
-{{define "latex"}}
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js">
-    MathJax.Hub.Config({
-        extensions: ["tex2jax.js","TeX/AMSmath.js","TeX/AMSsymbols.js"],
-        jax: ["input/TeX", "output/HTML-CSS"],
-        tex2jax: {
-            inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-            displayMath: [ ['$$','$$'], ["\\[","\\]"] ],
-        },
-        "HTML-CSS": { availableFonts: ["TeX"] }
-    });
-</script>
-{{end}}
