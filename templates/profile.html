@@ -1,28 +1,37 @@
 {% extends "templates/base.html" %}
 
-{% block header %}{{ username }}{% endblock %}
-{% block header_description %}{{ email }}{% endblock %}
+{% block header %}
+    {% if is_user %}
+        {{ name }}
+    {% else %}
+        (정보 없음)
+    {% endif %}
+{% endblock %}
+
+{% block header_description %}
+    {{ email }}
+{% endblock %}
 
 {% block article %}
-<article>
-    <div class="inset">
-        {% if is_user %}
-        <h2>푼 문제</h2>
-        <div class="board">
-            <p>AL2 AL3 AL3 AL7 AL8 LA25 LA63 LA71</p>
+    <article>
+        <div class="inset">
+            {% if is_user %}
+            <h2>푼 문제</h2>
+            <div class="board">
+                <p>AL2 AL3 AL3 AL7 AL8 LA25 LA63 LA71</p>
+            </div>
+            <h2>시도한 문제</h2>
+            <div class="board">
+                <p>LA31</p>
+            </div>
+            <h2>참여한 토론</h2>
+            <div class="board">
+                <p>PH1 PH3 PH7 PH12 PH31 PH42</p>
+            </div>
+            {% else %}
+            <h2>{{ email }}로 등록된 유저 정보가 존재하지 않습니다.</h2>
+            <p><a href="/">메인 페이지로 돌아가기</a></p>
+            {% endif %}
         </div>
-        <h2>시도한 문제</h2>
-        <div class="board">
-            <p>LA31</p>
-        </div>
-        <h2>참여한 토론</h2>
-        <div class="board">
-            <p>PH1 PH3 PH7 PH12 PH31 PH42</p>
-        </div>
-        {% else %}
-        <h2>{{ email }}로 등록된 유저 정보가 존재하지 않습니다.</h2>
-        <p><a href="/">메인 페이지로 돌아가기</a></p>
-        {% endif %}
-    </div>
-</article>
+    </article>
 {% endblock %}

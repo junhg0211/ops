@@ -3,6 +3,10 @@ body {
     font-family: "Pretendard", "Noto Sans CJK KR", sans-serif;
 }
 
+a {
+    color: black;
+}
+
 .inset {
     width: 1024px;
     margin: auto;
@@ -13,7 +17,6 @@ nav h2 {
 }
 
 nav a {
-    color: black;
     text-decoration: none;
 }
 

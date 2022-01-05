@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>OPS</title>
     <link rel="stylesheet" href="/assets/index.css">
+    <link rel="icon" href="/assets/favicon.png">
     <meta name="google-signin-client_id"
           content="589189790588-0lql284q6feemdaep92ta6g6gidpd52v.apps.googleusercontent.com">
     <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -46,10 +47,10 @@
                 <li>자주 받는 질문</li>
             </ul>
         </nav>
-        <div class="footer-profile">
+        <div class="footer-profile" style="display: none;" id="footer-profile-div">
             <p>현재 로그인 중</p>
             <div class="footer-profile-image">
-                <a class="profile-href"><img src="" alt="프로필 사진" id="footer-profile" style="display: none;"></a>
+                <a class="profile-href"><img src="" alt="프로필 사진" id="footer-profile"></a>
             </div>
             <div>
                 <h3>스치</h3>
@@ -61,7 +62,7 @@
 
 <!--suppress JSUnresolvedFunction, JSUnusedGlobalSymbols -->
 <script>
-    const profileElement = ["#nav-profile", "#footer-profile"]
+    const profileElement = ["#nav-profile", "#footer-profile-div", "#footer-profile"]
 
     function onSignIn(googleUser) {
         let basicProfile = googleUser.getBasicProfile();
