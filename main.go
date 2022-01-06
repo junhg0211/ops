@@ -8,6 +8,7 @@ import (
 	"github.com/noirbizarre/gonja"
 	"github.com/noirbizarre/gonja/exec"
 	"net/http"
+	"strconv"
 )
 
 var (
@@ -15,24 +16,26 @@ var (
 	templates = make(map[string]*exec.Template)
 )
 
-func index(w http.ResponseWriter, _ *http.Request) {
+func indexRoute(w http.ResponseWriter, _ *http.Request) {
 	out, err := templates["index"].Execute(nil)
 	if err != nil {
-		fmt.Println("executing index templates:", err)
+		fmt.Println("executing indexRoute templates:", err)
 		return
 	}
 
 	_, err = w.Write([]byte(out))
 	if err != nil {
-		fmt.Println("writing index:", err)
+		fmt.Println("writing indexRoute:", err)
 		return
 	}
 }
 
-func profile(w http.ResponseWriter, req *http.Request) {
-	param := mux.Vars(req)
-	var u = username{email: param["email"]}
-	var isUser = true
+func profileRoute(w http.ResponseWriter, req *http.Request) {
+	var (
+		param  = mux.Vars(req)
+		u      = username{email: param["authorEmail"]}
+		isUser = true
+	)
 
 	row := db.QueryRow("select name from username where email = ?", u.email)
 	err := row.Scan(&(u.name))
@@ -41,54 +44,75 @@ func profile(w http.ResponseWriter, req *http.Request) {
 	}
 
 	out, err := templates["profile"].Execute(gonja.Context{
-		"name":    u.name,
-		"email":   u.email,
-		"is_user": isUser,
+		"name":        u.name,
+		"authorEmail": u.email,
+		"is_user":     isUser,
 	})
 
 	if err != nil {
-		fmt.Println("executing profile templates:", err)
+		fmt.Println("executing profileRoute templates:", err)
 		return
 	}
 	_, err = w.Write([]byte(out))
 	if err != nil {
-		fmt.Println("writing profile:", err)
+		fmt.Println("writing profileRoute:", err)
 		return
 	}
 }
 
-func upload(w http.ResponseWriter, _ *http.Request) {
+func uploadRoute(w http.ResponseWriter, _ *http.Request) {
 	out, err := templates["upload"].Execute(nil)
 
 	if err != nil {
-		fmt.Println("executing upload templates:", err)
+		fmt.Println("executing uploadRoute templates:", err)
 		return
 	}
 	_, err = w.Write([]byte(out))
 	if err != nil {
-		fmt.Println("writing upload:", err)
+		fmt.Println("writing uploadRoute:", err)
 		return
 	}
 }
 
-func problem(w http.ResponseWriter, req *http.Request) {
+func problemRoute(w http.ResponseWriter, req *http.Request) {
 	param := mux.Vars(req)
+	var (
+		isProblem = true
+		p         problem
+	)
+
+	problemCode, err := strconv.Atoi(param["problem_code"])
+	if err != nil {
+		isProblem = false
+	}
+	p.problemCode = problemCode
+
+	row := db.QueryRow("select email, content, title from problem where problem_code = ?", p.problemCode)
+	err = row.Scan(&p.authorEmail, &p.content, &p.title)
+	if err != nil {
+		isProblem = false
+	}
+
 	out, err := templates["problem"].Execute(gonja.Context{
-		"problem_code": param["problem_code"],
+		"is_problem":   isProblem,
+		"problem_code": p.problemCode,
+		"content":      p.content,
+		"title":        p.title,
+		"author_email": p.authorEmail,
 	})
 
 	if err != nil {
-		fmt.Println("executing problem templates:", err)
+		fmt.Println("executing problemRoute templates:", err)
 		return
 	}
 	_, err = w.Write([]byte(out))
 	if err != nil {
-		fmt.Println("writing problem:", err)
+		fmt.Println("writing problemRoute:", err)
 		return
 	}
 }
 
-func reload(w http.ResponseWriter, req *http.Request) {
+func reloadRoute(w http.ResponseWriter, req *http.Request) {
 	reloadTemplates()
 	http.Redirect(w, req, "/", http.StatusTemporaryRedirect)
 }
@@ -123,12 +147,12 @@ func main() {
 
 	router := mux.NewRouter()
 	router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("assets"))))
-	router.HandleFunc("/", index)
-	router.HandleFunc("/index", index)
-	router.HandleFunc("/profile/{email}", profile)
-	router.HandleFunc("/upload", upload)
-	router.HandleFunc("/problem/{problem_code:[A-Z]+\\d+}", problem)
-	router.HandleFunc("/reload", reload)
+	router.HandleFunc("/", indexRoute)
+	router.HandleFunc("/index", indexRoute)
+	router.HandleFunc("/profile/{authorEmail}", profileRoute)
+	router.HandleFunc("/upload", uploadRoute)
+	router.HandleFunc("/problem/{problem_code:\\d+}", problemRoute)
+	router.HandleFunc("/reload", reloadRoute)
 
 	err = http.ListenAndServe(":80", router)
 	if err != nil {
