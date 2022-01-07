@@ -94,6 +94,10 @@ article nav {
     margin-bottom: 3rem;
 }
 
+.problem-board a {
+    text-decoration: none;
+}
+
 .section-title {
     display: flex;
 }
@@ -128,8 +132,8 @@ article nav {
     margin-right: 1rem;
 }
 
-.problem-content {
-    color: lightgray;
+.problem-title {
+    color: gray;
 }
 
 .rate {

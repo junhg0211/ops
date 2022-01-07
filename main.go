@@ -17,7 +17,27 @@ var (
 )
 
 func indexRoute(w http.ResponseWriter, _ *http.Request) {
-	out, err := templates["index"].Execute(nil)
+	rows, err := db.Query("select * from problem order by problem_code desc limit 10")
+	if err != nil {
+		fmt.Println("executing querying db index:", err)
+		return
+	}
+
+	var problems []problem
+
+	for rows.Next() {
+		p := problem{}
+		err = rows.Scan(&p.authorEmail, &p.code, &p.content, &p.title)
+		if err != nil {
+			fmt.Println("scanning row index:", err)
+			return
+		}
+		problems = append(problems, p)
+	}
+
+	out, err := templates["index"].Execute(gonja.Context{
+		"problems": problems,
+	})
 	if err != nil {
 		fmt.Println("executing indexRoute templates:", err)
 		return
@@ -44,9 +64,9 @@ func profileRoute(w http.ResponseWriter, req *http.Request) {
 	}
 
 	out, err := templates["profile"].Execute(gonja.Context{
-		"name":        u.name,
-		"authorEmail": u.email,
-		"is_user":     isUser,
+		"name":    u.name,
+		"email":   u.email,
+		"is_user": isUser,
 	})
 
 	if err != nil {
@@ -76,26 +96,21 @@ func uploadRoute(w http.ResponseWriter, _ *http.Request) {
 
 func problemRoute(w http.ResponseWriter, req *http.Request) {
 	param := mux.Vars(req)
-	var (
-		isProblem = true
-		p         problem
-	)
+	isProblem := true
 
 	problemCode, err := strconv.Atoi(param["problem_code"])
 	if err != nil {
 		isProblem = false
 	}
-	p.problemCode = problemCode
 
-	row := db.QueryRow("select email, content, title from problem where problem_code = ?", p.problemCode)
-	err = row.Scan(&p.authorEmail, &p.content, &p.title)
+	p, err := getProblem(problemCode)
 	if err != nil {
 		isProblem = false
 	}
 
 	out, err := templates["problem"].Execute(gonja.Context{
 		"is_problem":   isProblem,
-		"problem_code": p.problemCode,
+		"problem_code": p.code,
 		"content":      p.content,
 		"title":        p.title,
 		"author_email": p.authorEmail,
