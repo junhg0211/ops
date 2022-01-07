@@ -26,7 +26,10 @@
         {% if is_problem %}
             <h2>개요</h2>
             <div class="board">
-                <p>{{ content }}</p>
+<!--                <p>{{ content }}</p>-->
+                {% for line in split(content, "\n") %}
+                    <p>{{ line }}</p>
+                {% endfor %}
             </div>
             <h2>제출</h2>
             <div class="board">

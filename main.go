@@ -9,6 +9,7 @@ import (
 	"github.com/noirbizarre/gonja/exec"
 	"net/http"
 	"strconv"
+	"strings"
 )
 
 var (
@@ -114,6 +115,7 @@ func problemRoute(w http.ResponseWriter, req *http.Request) {
 		"content":      p.content,
 		"title":        p.title,
 		"author_email": p.authorEmail,
+		"split":        strings.Split,
 	})
 
 	if err != nil {
