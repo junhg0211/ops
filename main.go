@@ -27,7 +27,7 @@ func indexRoute(w http.ResponseWriter, _ *http.Request) {
 
 	for rows.Next() {
 		p := problem{}
-		err = rows.Scan(&p.authorEmail, &p.code, &p.content, &p.title)
+		err = rows.Scan(&p.authorEmail, &p.code, &p.content, &p.title, &p.subject)
 		if err != nil {
 			fmt.Println("scanning row index:", err)
 			return

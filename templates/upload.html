@@ -20,28 +20,38 @@
 {% block article %}
 <article>
     <div class="inset">
-        <div class="board">
+        <div class="board" id="uploading-placeholder">
+            <p>로그인하지 않은 상태로 문제를 출제할 수 없습니다!</p>
+        </div>
+        <div class="board" id="uploading" style="display: none;">
             <form action="">
                 <h2>문제 출제하기</h2>
                 <p>
                     <label for="subject">
                         <select name="subject" id="subject">
                             <option value="math">수학</option>
+                            <option value="geometry">- 기하학</option>
+                            <option value="algebra">- 대수학</option>
+                            <option value="linear-algebra">- 선형대수학</option>
+                            <option value="calculus">- 미적분</option>
+                            <option value="functional-equations">- 함수방정식</option>
                             <option value="physics">물리학</option>
+                            <option value="dynamics">- 역학</option>
+                            <option value="electromagnetism">- 전자기학</option>
                             <option value="philosophy">철학</option>
                         </select>
                     </label>
                 </p>
                 <p>
-                    <label for="content"><textarea name="content" id="content" onchange="updatePreview()"
-                                                   placeholder="LaTeX 문법을 사용할 수 있습니다."></textarea></label>
+                    <label for="content">
+                        <textarea name="content" id="content" onchange="updatePreview()"
+                                  placeholder="LaTeX 문법을 사용할 수 있습니다."></textarea>
+                    </label>
                 </p>
             </form>
             <div class="preview">
                 <h2>본문 미리보기</h2>
-                <div id="preview">
-                    <p>Hello, world!</p>
-                </div>
+                <div id="preview"></div>
             </div>
         </div>
     </div>
@@ -65,6 +75,15 @@
         });
 
         MathJax.Hub.Queue(["Typeset", MathJax.Hub, "#preview"]);
+    }
+
+    const uploading = document.querySelector("#uploading");
+    const uploadingPlaceholder = document.querySelector("#uploading-placeholder");
+
+    // noinspection JSUnusedGlobalSymbols
+    function onOnSignIn(_) {
+        uploading.style.display = "";
+        uploadingPlaceholder.style.display = "none";
     }
 </script>
 {% endblock %}

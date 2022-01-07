@@ -261,3 +261,11 @@ textarea:focus {
 .comment-date {
     color: lightgray;
 }
+
+code {
+    border: 1px lightgray solid;
+    background-color: #fafafa;
+    border-radius: 5px;
+    padding: 5px;
+    font-family: monospace;
+}
